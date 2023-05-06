@@ -1,3 +1,27 @@
+// Forms Components
+import { Signup } from '../components/AuthForms/Signup';
+import { Login } from '../components/AuthForms/Login';
+
+// Hooks
+import { useEffect } from 'react';
+
+// React Router
+import { useNavigate, Routes, Route } from 'react-router-dom';
+
 export const Auth = () => {
-	return <div>Auth</div>;
+	
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (window.location.pathname !== '/signup') navigate('/');
+	}, [navigate]);
+
+	return (
+		<>
+			<Routes>
+				<Route path='/' element={<Login />} />
+				<Route path='/signup' element={<Signup />} />
+			</Routes>
+		</>
+	);
 };

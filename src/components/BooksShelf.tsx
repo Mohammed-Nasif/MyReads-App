@@ -14,7 +14,7 @@ export const BooksShelf: FC<{
 	
 	return (
 		<div className='bookshelf'>
-			<h2 className='bookshelf-title'>{shelf.name}</h2>
+			<h2 className='bookshelf-title mt-3 pb-2'>{shelf.name}</h2>
 			<div className='bookshelf-books'>
 				<ol className='books-grid'>
 					{shelf.identifier === 'search'

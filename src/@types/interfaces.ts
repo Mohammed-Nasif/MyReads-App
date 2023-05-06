@@ -1,3 +1,10 @@
+export interface User {
+	userName: string;
+	email: string;
+	password: string;
+	userToken: string;
+	isLogged: boolean;
+}
 export interface Shelf {
 	id: number;
 	name: string;

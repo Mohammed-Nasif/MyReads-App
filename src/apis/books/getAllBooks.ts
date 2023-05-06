@@ -1,5 +1,6 @@
 // Constants
-import { API, requestHeaders } from '../../constants';
+import { API } from '../../constants';
+import { requestHeaders } from './auth';
 
 // Types and Interfaces
 import { Book } from '../../@types/interfaces';
