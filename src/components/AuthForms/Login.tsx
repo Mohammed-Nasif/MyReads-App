@@ -61,7 +61,7 @@ export const Login = (): JSX.Element => {
 				<h1 className='pt-5 pb-2'>MyReads App</h1>
 			</div>
 			<div className='auth-form '>
-				<h2 className='fs-3 fw-bold mb-3'>Join Us!</h2>
+				<h2 className='fs-3 fw-bold mb-3'>Welcome Back!</h2>
 				<Form onSubmit={handleSubmit(onLogin)} id='signUp'>
 					{/*Email Address*/}
 					<Form.Group className='mb-3' controlId='formBasicEmail'>
@@ -143,7 +143,7 @@ export const Login = (): JSX.Element => {
 			</div>
 
 			<p className='text-center'>
-				Son't have account?{'  '}
+				Don't have account?{'  '}
 				<Link to='/signup' className='fw-bolder text-white-50'>
 					Signup
 				</Link>
