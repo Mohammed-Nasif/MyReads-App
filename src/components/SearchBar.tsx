@@ -5,6 +5,7 @@ import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 export const SearchBar: FC<{ searchQueryHandler: (e: FormEvent<HTMLInputElement>) => void }> = ({ searchQueryHandler }): JSX.Element => {
+	
 	return (
 		<div className='search-books-bar'>
 			<Link to='/' className='close-search'>

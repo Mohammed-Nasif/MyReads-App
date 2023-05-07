@@ -35,6 +35,7 @@ function App(): JSX.Element {
 				) : (
 					<>
 						<Route path='/' element={<Home />} />
+						<Route path='/home' element={<Home />} />
 						<Route path='/search' element={<Search />} />
 						<Route path='*' element={<PageNotFound />} />
 					</>

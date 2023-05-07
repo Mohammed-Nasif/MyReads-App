@@ -18,13 +18,18 @@ import { Shelf, Book } from '../@types/interfaces';
 export const Search = (): JSX.Element => {
 
 	const shelf: Shelf = { id: 0, name: 'Search', identifier: 'search' };
+
 	const [searchQuery, setSearchQuery] = useState<string>('');
+
+	// Deferred Value For Search Query To Debounce user typing
 	const deferredSearchQuery = useDeferredValue<string>(searchQuery);
 	const [searchedBooks, setSearchedBooks] = useState<Book[]>([]);
+
+	// Use User Current Books from the userBookscontext
 	const { shelvesUserBooks } = useContext(UserBooksContext) as UserBooksContextType;
 
 	useEffect(() => {
-
+		// Flag To Ignore Pervious Request If SearchQuery Changed 
 		let ignorePrevReq: boolean = false;
 
 		(async () => {
@@ -42,10 +47,12 @@ export const Search = (): JSX.Element => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [deferredSearchQuery]);
 
+	// Fn Sent to SearchBar To Get The SearchQuery Value as we Can't setState it From Child To Parent
 	const searchQueryHandler = (e: FormEvent<HTMLInputElement>): void => {
 		setSearchQuery(e.currentTarget.value);
 	};
 
+	// Fn To set Shelf [Category] To Each Book from Search EndPoint 
 	const categorizeSearchedBooks = (searchedBooksResult: Book[]): void => {
 		searchedBooksResult.forEach((book: Book) => {
 			shelvesUserBooks.forEach((userBook: Book) => {

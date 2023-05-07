@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 // React Hook Form Utilities
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 // React Router
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { AuthUserToken } from '../../apis/books/auth';
 
 export const Login = (): JSX.Element => {
-
+	
 	const {
 		register,
 		handleSubmit,
@@ -26,34 +26,45 @@ export const Login = (): JSX.Element => {
 		shouldFocusError: true,
 	});
 
+	//Validation Flags
+	const [emailValue, setEmailValue] = useState<string>('');
+	const [emailTouched, setEmailTouched] = useState<boolean>(false);
+	const [passTouched, setPassTouched] = useState<boolean>(false);
+
 	const navigate = useNavigate();
 
-	const onLogin = (userData: any) => {
-		// User Data
-		const email = userData.email;
-		const password = userData.password;
-		let currentUsers = JSON.parse(localStorage.users);
-		const loggingUser = currentUsers.find((user: any, i: number): any => {
+	const onLogin: SubmitHandler<FieldValues> = (userLoginData: any) => {
+		const email = userLoginData.email;
+		const password = userLoginData.password;
+
+		// We Here Should be Connecting With Backend and DB [It's Just Mocking]
+		const usersCollection = JSON.parse(localStorage.users);
+
+		// Get The User From DB [Aka LocalStorage]
+		const loggingUser = usersCollection.find((user: any, i: number): any => {
 			if (user.email === email && user.password === password) {
-				currentUsers.splice(i, 1);
-				user['isLogged'] = true;
-				localStorage.userID = i;
-				currentUsers.push(user);
-				localStorage.setItem('users', JSON.stringify(currentUsers));
+				// Cut the user from LocalStorage To Update it [We can't update Directly as DataBase]
+				usersCollection.splice(i, 1);
+
+				user['isLogged'] = true; // Update his isLogged Status
+				localStorage.userID = i; // Save Index [ID] of user in DB
+
+				// Push the user again to the collection after update
+				usersCollection.push(user);
+
+				// Set the UsersCollection again in LocalStorage after Update
+				localStorage.setItem('users', JSON.stringify(usersCollection));
+
+				// Navigate To Home Page After Login
 				navigate('/');
-				navigate(0);
+				navigate(0); // Reload To Re-render after Token Update in LocalStorage
 				return user;
 			}
 			return null;
 		});
+		// Call Auth Fn to Send User to Set Token and Headers For API Calls
 		AuthUserToken(loggingUser);
 	};
-
-	//Validation Flags
-	const [registError, setRegistError] = useState<string>('');
-	const [emailValue, setEmailValue] = useState<string>('');
-	const [emailTouched, setEmailTouched] = useState<boolean>(false);
-	const [passTouched, setPassTouched] = useState<boolean>(false);
 
 	return (
 		<div>
@@ -73,10 +84,7 @@ export const Login = (): JSX.Element => {
 								pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/,
 								onChange: (e) => {
 									setEmailValue(e.target.value);
-									setRegistError('');
-									if (e.target.value.trim() === '') {
-										setRegistError('');
-									} else {
+									if (e.target.value.trim() !== '') {
 										setEmailTouched(false);
 									}
 								},
@@ -96,9 +104,6 @@ export const Login = (): JSX.Element => {
 						)}
 						{errors?.email?.type === 'required' && <p className='font-weight text-danger mt-1 mb-0'>Email is required</p>}
 						{errors?.email?.type === 'pattern' && <p className='font-weight text-danger mt-1 mb-0'>Email enter a valid email</p>}
-						{errors?.email?.type !== 'pattern' && registError === 'Firebase: Error (auth/email-already-in-use).' && emailValue.trim() !== '' && (
-							<p className='font-weight text-danger mt-1 mb-0'>This email already in EduMates</p>
-						)}
 					</Form.Group>
 
 					{/*Password*/}

@@ -17,6 +17,7 @@ export const BooksShelf: FC<{
 			<h2 className='bookshelf-title mt-3 pb-2'>{shelf.name}</h2>
 			<div className='bookshelf-books'>
 				<ol className='books-grid'>
+					{/* Conditional Render For Search Shelf casue there is no book.shelf === Search so No Filter Applied */}
 					{shelf.identifier === 'search'
 						? shelvesBooks.map((book: BookInterface) => (
 								<li key={book.id}>

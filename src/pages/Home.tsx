@@ -20,6 +20,7 @@ export const Home = (): JSX.Element => {
 		{ id: 2, name: 'Read', identifier: 'read' },
 	];
 
+	// Use User Current Books from the userBookscontext
 	const { shelvesUserBooks } = useContext(UserBooksContext) as UserBooksContextType;
 
 	return (

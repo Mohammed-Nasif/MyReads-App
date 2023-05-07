@@ -13,8 +13,11 @@ export const UserBooksContext = createContext<UserBooksContextType | null>(null)
 const UserBooksProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	
 	const [shelvesUserBooks, setSelvesUserBooks] = useState<Book[]>([]);
+
+	// Flag To Trigger The Update Done To Refetch The Data in Home Page
 	const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
+	// SideEffect On The Update Flag To fetch Book Data
 	useEffect(() => {
 		// Fetch All User Books From The API On Page Mounted
 		const fetchUserBooksList = async (): Promise<void> => {
@@ -25,6 +28,8 @@ const UserBooksProvider: FC<{ children: ReactNode }> = ({ children }) => {
 				throw new Error();
 			}
 		};
+
+		// Cleanup onUnmount
 		return () => {
 			fetchUserBooksList();
 		};

@@ -16,6 +16,7 @@ import { v4 as uuid } from 'uuid';
 
 // Types and Interfaces
 import { User } from '../../@types/interfaces';
+import { AuthUserToken } from '../../apis/books/auth';
 
 export const Signup = (): JSX.Element => {
     
@@ -40,16 +41,35 @@ export const Signup = (): JSX.Element => {
 
 	const navigate = useNavigate();
 
-	const onSignup: SubmitHandler<FieldValues> = (userData) => {
+	const onSignup: SubmitHandler<FieldValues> = (userSignupData) => {
+		// Generate a unique token for storing User bookshelf data on the backend server.
 		const userToken: string = uuid();
-		const createdUser: User = { userName: userData.name.toLowerCase(), email: userData.email, password: userData.password, userToken, isLogged: true };
+		// New User Object Created
+		const createdUser: User = {
+			userName: userSignupData.name.toLowerCase(),
+			email: userSignupData.email,
+			password: userSignupData.password,
+			userToken,
+			isLogged: true,
+		};
 
-		let currentUsers = JSON.parse(localStorage.users);
+		// We Here Should be Connecting With Backend and DB [It's Just Mocking]
+		const usersCollection = JSON.parse(localStorage.users);
 
-		currentUsers.push(createdUser);
-		localStorage.setItem('users', JSON.stringify(currentUsers));
+		// Put The newUser to the collection
+		usersCollection.push(createdUser);
 
+		localStorage.userID = usersCollection.length - 1; // Save Index [ID] of user in DB
+
+		// Set The Collection to LocalStorage Again after update
+		localStorage.setItem('users', JSON.stringify(usersCollection));
+
+		// Call Auth Fn to Send User to Set Token and Headers For API Calls
+		AuthUserToken(createdUser);
+
+		// Navigate To Home Page After Login
 		navigate('/home');
+		navigate(0); // Reload To Re-render after Token Update in LocalStorage
 	};
 
 	return (
@@ -120,8 +140,8 @@ export const Signup = (): JSX.Element => {
 						)}
 						{errors?.email?.type === 'required' && <p className='font-weight text-danger mt-1 mb-0'>Email is required</p>}
 						{errors?.email?.type === 'pattern' && <p className='font-weight text-danger mt-1 mb-0'>Email enter a valid email</p>}
-						{errors?.email?.type !== 'pattern' && registError === 'Firebase: Error (auth/email-already-in-use).' && emailValue.trim() !== '' && (
-							<p className='font-weight text-danger mt-1 mb-0'>This email already in EduMates</p>
+						{errors?.email?.type !== 'pattern' && registError === 'Error (auth/email-already-in-use).' && emailValue.trim() !== '' && (
+							<p className='font-weight text-danger mt-1 mb-0'>This email already in registed</p>
 						)}
 					</Form.Group>
 

@@ -13,6 +13,7 @@ export const Auth = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		// Always Navigate To Login Page if the user try to access any different Route except Signup Route
 		if (window.location.pathname !== '/signup') navigate('/');
 	}, [navigate]);
 
