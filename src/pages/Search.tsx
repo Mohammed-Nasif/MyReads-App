@@ -36,8 +36,10 @@ export const Search = (): JSX.Element => {
 			setSearchedBooks([]);
 			if (deferredSearchQuery.trim() !== '') {
 				const searchedBooksResult = await searchBooks(deferredSearchQuery.trim());
-				searchedBooksResult.forEach((book: any) => (book.shelf = 'none'));
-				if (!ignorePrevReq) categorizeSearchedBooks(searchedBooksResult);
+				if(searchedBooksResult.length > 0){
+					searchedBooksResult.forEach((book: Book) => (book.shelf = 'none'));
+					if (!ignorePrevReq) categorizeSearchedBooks(searchedBooksResult);
+				}
 			}
 		})();
 

@@ -8,13 +8,12 @@ import { PageNotFound } from './pages/PageNotFound';
 import { useEffect, useState } from 'react';
 
 // React Router
-import { Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 // CSS Styles
 import './styles/App.css';
 
 function App(): JSX.Element {
-
 	const [userToken, setUserToken] = useState<string>(localStorage.token);
 	const token = localStorage.token;
 

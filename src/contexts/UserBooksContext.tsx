@@ -8,10 +8,9 @@ import { getAllBooks } from '../apis/books/getAllBooks';
 import { UserBooksContextType } from '../@types/types';
 import { Book } from '../@types/interfaces';
 
-export const UserBooksContext = createContext<UserBooksContextType | null>(null);
+export const UserBooksContext = createContext<UserBooksContextType | null>({ shelvesUserBooks: [], setUpdateFlag: false });
 
 const UserBooksProvider: FC<{ children: ReactNode }> = ({ children }) => {
-	
 	const [shelvesUserBooks, setSelvesUserBooks] = useState<Book[]>([]);
 
 	// Flag To Trigger The Update Done To Refetch The Data in Home Page

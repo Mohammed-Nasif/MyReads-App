@@ -19,10 +19,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<StrictMode>
-		<UserBooksProvider>
-			<BrowserRouter>
+		<BrowserRouter>
+			<UserBooksProvider>
 				<App />
-			</BrowserRouter>
-		</UserBooksProvider>
+			</UserBooksProvider>
+		</BrowserRouter>
 	</StrictMode>,
 );
