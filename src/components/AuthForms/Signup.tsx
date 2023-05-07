@@ -54,6 +54,10 @@ export const Signup = (): JSX.Element => {
 		};
 
 		// We Here Should be Connecting With Backend and DB [It's Just Mocking]
+		if(!localStorage.users) {
+			localStorage.users = JSON.stringify([]);
+		}
+		
 		const usersCollection = JSON.parse(localStorage.users);
 
 		// Put The newUser to the collection
