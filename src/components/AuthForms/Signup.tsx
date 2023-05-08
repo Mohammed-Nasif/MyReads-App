@@ -226,7 +226,7 @@ export const Signup = (): JSX.Element => {
 					{/*Submit Button*/}
 					<Form.Group className='my-3 d-flex flex-column align-items-center'>
 						<Button variant='primary' type='submit'>
-							Sign Up
+							Sign up
 						</Button>
 					</Form.Group>
 				</Form>

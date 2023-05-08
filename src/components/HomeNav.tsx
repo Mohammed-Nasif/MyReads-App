@@ -1,8 +1,8 @@
 // React Router 
 import { useNavigate } from 'react-router-dom';
 
-export const HomeHeader = (): JSX.Element => {
-
+export const HomeNav = (): JSX.Element => {
+	
 	const navigate = useNavigate();
 
 	const onLogout = () => {
@@ -26,7 +26,7 @@ export const HomeHeader = (): JSX.Element => {
 		localStorage.setItem('users', JSON.stringify(userCollection));
 
 		// Navigate to Login Page Again
-		navigate('/'); 
+		navigate('/');
 		navigate(0); // Reload To Re-render after Token Lost in LocalStorage
 	};
 

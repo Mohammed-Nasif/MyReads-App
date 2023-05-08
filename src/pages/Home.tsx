@@ -1,5 +1,5 @@
 // Components
-import { HomeHeader } from '../components/HomeHeader';
+import { HomeNav } from '../components/HomeNav';
 import { ShelvesWrapper } from '../components/ShelvesWrapper';
 import { SearchButton } from '../components/SearchButton';
 
@@ -25,7 +25,7 @@ export const Home = (): JSX.Element => {
 
 	return (
 		<div className='list-books'>
-			<HomeHeader />
+			<HomeNav />
 			<ShelvesWrapper shelves={homeShelves} shelvesBooks={shelvesUserBooks} />
 			<SearchButton />
 		</div>
