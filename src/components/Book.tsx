@@ -11,6 +11,9 @@ import { UserBooksContext } from '../contexts/UserBooksContext';
 import { UserBooksContextType } from '../@types/types';
 import { Book as BookInterface } from '../@types/interfaces';
 
+// React-Toastify
+import { toast } from 'react-toastify';
+
 export const Book: FC<{
 	book: BookInterface;
 }> = ({ book }): JSX.Element => {
@@ -27,6 +30,17 @@ export const Book: FC<{
 		await updateBookShelf(book, selectedShelfValue);
 		// Mainpulate The Update Flag To Affect The useEffect in UserBooksContext to Refetch Home Data
 		setUpdateFlag((prev: boolean) => !prev);
+		// Notify The User that book category changed
+		toast.success('Category changed', {
+			position: 'top-right',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+		});
 	};
 
 	return (

@@ -8,6 +8,9 @@ import { searchBooks } from '../apis/books/searchBooks';
 import { BooksShelf } from '../components/BooksShelf';
 import { SearchBar } from '../components/SearchBar';
 
+// React Tostify
+import { toast } from 'react-toastify';
+
 // Contexts
 import { UserBooksContext } from '../contexts/UserBooksContext';
 
@@ -29,16 +32,31 @@ export const Search = (): JSX.Element => {
 	const { shelvesUserBooks } = useContext(UserBooksContext) as UserBooksContextType;
 
 	useEffect(() => {
-		// Flag To Ignore Pervious Request If SearchQuery Changed 
+		// Flag To Ignore Pervious Request If SearchQuery Changed
 		let ignorePrevReq: boolean = false;
 
 		(async () => {
 			setSearchedBooks([]);
 			if (deferredSearchQuery.trim() !== '') {
 				const searchedBooksResult = await searchBooks(deferredSearchQuery.trim());
-				if(searchedBooksResult.length > 0){
+
+				if (searchedBooksResult.length > 0) {
 					searchedBooksResult.forEach((book: Book) => (book.shelf = 'none'));
 					if (!ignorePrevReq) categorizeSearchedBooks(searchedBooksResult);
+
+				} else {
+					if (!ignorePrevReq) {
+						toast.info('No Books Found', {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							theme: 'light',
+						});
+					}
 				}
 			}
 		})();
@@ -54,7 +72,7 @@ export const Search = (): JSX.Element => {
 		setSearchQuery(e.currentTarget.value);
 	};
 
-	// Fn To set Shelf [Category] To Each Book from Search EndPoint 
+	// Fn To set Shelf [Category] To Each Book from Search EndPoint
 	const categorizeSearchedBooks = (searchedBooksResult: Book[]): void => {
 		searchedBooksResult.forEach((book: Book) => {
 			shelvesUserBooks.forEach((userBook: Book) => {

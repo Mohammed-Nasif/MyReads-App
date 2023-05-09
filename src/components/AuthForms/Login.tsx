@@ -8,6 +8,9 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 // React Router
 import { Link, useNavigate } from 'react-router-dom';
 
+// React-Toastify
+import { toast } from 'react-toastify';
+
 // Hooks
 import { useState } from 'react';
 
@@ -15,7 +18,7 @@ import { useState } from 'react';
 import { AuthUserToken } from '../../apis/books/auth';
 
 export const Login = (): JSX.Element => {
-	
+
 	const {
 		register,
 		handleSubmit,
@@ -34,6 +37,7 @@ export const Login = (): JSX.Element => {
 	const navigate = useNavigate();
 
 	const onLogin: SubmitHandler<FieldValues> = (userLoginData: any) => {
+
 		const email = userLoginData.email;
 		const password = userLoginData.password;
 
@@ -59,8 +63,20 @@ export const Login = (): JSX.Element => {
 				navigate('/');
 				navigate(0); // Reload To Re-render after Token Update in LocalStorage
 				return user;
+			} else {
+				// Notify user that there is something wrong with his credientials
+				toast.error('Incorrect email or password', {
+					position: 'top-center',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+				});
+				return null;
 			}
-			return null;
 		});
 		// Call Auth Fn to Send User to Set Token and Headers For API Calls
 		AuthUserToken(loggingUser);
