@@ -1,5 +1,5 @@
 // Constants
-import { API } from '../../constants';
+import { API } from './constants';
 import { requestHeaders } from './auth';
 
 // Types and Interfaces

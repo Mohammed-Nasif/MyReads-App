@@ -8,7 +8,11 @@ import { getAllBooks } from '../apis/books/getAllBooks';
 import { UserBooksContextType } from '../@types/types';
 import { Book } from '../@types/interfaces';
 
-export const UserBooksContext = createContext<UserBooksContextType | null>({ shelvesUserBooks: [], setUpdateFlag: false });
+export const UserBooksContext = createContext<UserBooksContextType | null>({
+	shelvesUserBooks: [],
+	setUpdateFlag: (flag) => !flag,
+	updateFlag: false,
+});
 
 const UserBooksProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	const [shelvesUserBooks, setSelvesUserBooks] = useState<Book[]>([]);
@@ -34,7 +38,7 @@ const UserBooksProvider: FC<{ children: ReactNode }> = ({ children }) => {
 		};
 	}, [updateFlag]);
 
-	return <UserBooksContext.Provider value={{ shelvesUserBooks, setUpdateFlag }}>{children}</UserBooksContext.Provider>;
+	return <UserBooksContext.Provider value={{ shelvesUserBooks, setUpdateFlag, updateFlag }}>{children}</UserBooksContext.Provider>;
 };
 
 export default UserBooksProvider;

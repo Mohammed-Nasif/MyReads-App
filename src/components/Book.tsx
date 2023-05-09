@@ -19,7 +19,7 @@ export const Book: FC<{
 }> = ({ book }): JSX.Element => {
 	
 	// The UpdateFlag to  reFetch All user Books in Home after update
-	const { setUpdateFlag } = useContext(UserBooksContext) as UserBooksContextType;
+	const { setUpdateFlag, updateFlag } = useContext(UserBooksContext) as UserBooksContextType;
 
 	// PlaceHolder For Books with no Thumbnail
 	const bookPlaceholder: string = 'https://placehold.co/128x193?text=No+Cover+Available';
@@ -29,7 +29,7 @@ export const Book: FC<{
 		// Call The Update Fn from API
 		await updateBookShelf(book, selectedShelfValue);
 		// Mainpulate The Update Flag To Affect The useEffect in UserBooksContext to Refetch Home Data
-		setUpdateFlag((prev: boolean) => !prev);
+		setUpdateFlag(!updateFlag);
 		// Notify The User that book category changed
 		toast.success('Category changed', {
 			position: 'top-right',
