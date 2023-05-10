@@ -1,6 +1,7 @@
 // Testing Utilities
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 // Types and Interface
 import { Book as BookInterface, Shelf } from '../@types/interfaces';
@@ -8,6 +9,7 @@ import { Book as BookInterface, Shelf } from '../@types/interfaces';
 // Components
 import { Home } from '../pages/Home';
 import { ShelvesWrapper } from '../components/ShelvesWrapper';
+import { Search } from '../pages/Search';
 
 describe('Test Home Page', () => {
 	it('Check the existing of Logout Button', () => {
@@ -28,6 +30,20 @@ describe('Test Home Page', () => {
 		);
 		const searchBtn = screen.getByRole('link', { name: 'Go To Search' });
 		expect(searchBtn).toBeInTheDocument();
+	});
+
+	it('Test that the search button go to search page properly', async () => {
+		render(
+			<MemoryRouter>
+				<Home />
+				<Search />
+			</MemoryRouter>,
+		);
+		const searchBtn = screen.getByRole('link', { name: 'Go To Search' });
+		await act(async () => await userEvent.click(searchBtn));
+		await act(async () => {
+			expect(screen.getByRole('heading', { name: 'Search' })).toBeInTheDocument();
+		});
 	});
 
 	it('Check the existing of Shelves', () => {
