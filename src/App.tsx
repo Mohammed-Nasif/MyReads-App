@@ -1,7 +1,8 @@
 // Pages
+import { Auth } from './pages/Auth';
 import { Home } from './pages/Home';
 import { Search } from './pages/Search';
-import { Auth } from './pages/Auth';
+import { BookDetails } from './pages/BookDetails';
 import { PageNotFound } from './pages/PageNotFound';
 
 // React-Toastify
@@ -15,7 +16,6 @@ import './styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App(): JSX.Element {
-
 	return (
 		<>
 			<ToastContainer />
@@ -31,6 +31,7 @@ function App(): JSX.Element {
 						<Route path='/' element={<Home />} />
 						<Route path='/home' element={<Home />} />
 						<Route path='/search' element={<Search />} />
+						<Route path='/book/:bookID' element={<BookDetails />} />
 						<Route path='*' element={<PageNotFound />} />
 					</>
 				)}
